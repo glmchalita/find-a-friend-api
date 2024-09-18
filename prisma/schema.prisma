@@ -21,16 +21,28 @@ enum Species {
 model Ong {
   id            String   @id @default(uuid())
   name          String
-  city          String
   phone         String
   cnpj          String   @unique
   email         String   @unique
   password_hash String
   created_at    DateTime @default(now())
 
+  address    Address @relation(fields: [address_id], references: [id])
+  address_id String
+
   pets Pet[]
 
   @@map("ongs")
+}
+
+model Address {
+  id            String @id @default(uuid())
+  city          String
+  state         String
+  zipcode       String
+  street        String
+  street_number String
+  Ong           Ong[]
 }
 
 model Pet {

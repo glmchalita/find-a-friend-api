@@ -1,4 +1,4 @@
-export class CNPJAlreadyRegisteredError extends Error {
+export class CnpjAlreadyRegisteredError extends Error {
   constructor() {
     super('CNPJ already registered.')
   }
