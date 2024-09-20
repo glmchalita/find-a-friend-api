@@ -25,6 +25,6 @@ export function makePet(overwrite?: Overwrite) {
     birth_date:
       overwrite?.birth_date ??
       faker.date.birthdate({ mode: 'age', min: 0, max: 4 }),
-    ong_id: overwrite?.ong_id ?? crypto.randomUUID(),
+    ong_id: overwrite?.ong_id ?? randomUUID(),
   }
 }
