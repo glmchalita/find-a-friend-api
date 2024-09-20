@@ -1,23 +1,23 @@
 import { OngsRepository } from '@/repositories/ongs-repository'
 import { PetsRepository } from '@/repositories/pets-repository'
-import { Pet, Species } from '@prisma/client'
+import { Pet } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
-interface RegisterPetServiceRequest {
+interface CreatePetServiceRequest {
   name: string
-  species: Species
+  species: 'Dog' | 'Cat'
+  size: 'Small' | 'Medium' | 'Large'
   breed: string
   color: string
-  size: string
-  birth_on_date: Date
+  birth_date: Date
   ong_id: string
 }
 
-interface RegisterPetServiceResponse {
+interface CreatePetServiceResponse {
   pet: Pet
 }
 
-export class RegisterPetService {
+export class CreatePetService {
   constructor(
     private petsRepository: PetsRepository,
     private ongsRepository: OngsRepository,
@@ -26,17 +26,15 @@ export class RegisterPetService {
   async execute({
     name,
     species,
+    size,
     breed,
     color,
-    size,
-    birth_on_date,
+    birth_date,
     ong_id,
-  }: RegisterPetServiceRequest): Promise<RegisterPetServiceResponse> {
+  }: CreatePetServiceRequest): Promise<CreatePetServiceResponse> {
     const ong = await this.ongsRepository.findById(ong_id)
 
-    if (!ong) {
-      throw new ResourceNotFoundError()
-    }
+    if (!ong) throw new ResourceNotFoundError()
 
     const pet = await this.petsRepository.create({
       name,
@@ -44,7 +42,7 @@ export class RegisterPetService {
       breed,
       color,
       size,
-      birth_on_date,
+      birth_date,
       ong_id,
     })
 

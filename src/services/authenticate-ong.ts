@@ -21,18 +21,11 @@ export class AuthenticateOngService {
   }: AuthenticateOngServiceRequest): Promise<AuthenticateOngServiceResponse> {
     const ong = await this.ongsRepository.findByEmail(email)
 
-    if (!ong) {
-      throw new InvalidCredentialsError()
-    }
+    if (!ong) throw new InvalidCredentialsError()
 
-    const doesPasswordMatches = await bcryptjs.compare(
-      password,
-      ong.password_hash,
-    )
+    const doesPasswordMatches = await bcryptjs.compare(password, ong.password)
 
-    if (!doesPasswordMatches) {
-      throw new InvalidCredentialsError()
-    }
+    if (!doesPasswordMatches) throw new InvalidCredentialsError()
 
     return { ong }
   }

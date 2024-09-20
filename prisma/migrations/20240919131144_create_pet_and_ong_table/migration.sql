@@ -1,15 +1,24 @@
 -- CreateEnum
-CREATE TYPE "Species" AS ENUM ('DOG', 'CAT');
+CREATE TYPE "Species" AS ENUM ('Dog', 'Cat');
+
+-- CreateEnum
+CREATE TYPE "Size" AS ENUM ('Small', 'Medium', 'Large');
 
 -- CreateTable
 CREATE TABLE "ongs" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
+    "author_name" TEXT NOT NULL,
+    "whatsapp" TEXT NOT NULL,
     "cnpj" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password_hash" TEXT NOT NULL,
+    "cep" TEXT NOT NULL,
+    "state" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "street" TEXT NOT NULL,
+    "latitude" DECIMAL(65,30) NOT NULL,
+    "longitude" DECIMAL(65,30) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "ongs_pkey" PRIMARY KEY ("id")
@@ -19,10 +28,11 @@ CREATE TABLE "ongs" (
 CREATE TABLE "pets" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "species" "Species" NOT NULL,
+    "size" "Size" NOT NULL,
     "breed" TEXT NOT NULL,
     "color" TEXT NOT NULL,
-    "size" TEXT NOT NULL,
-    "birth_on_date" TIMESTAMP(3) NOT NULL,
+    "birth_date" TIMESTAMP(3) NOT NULL,
     "ong_id" TEXT NOT NULL,
 
     CONSTRAINT "pets_pkey" PRIMARY KEY ("id")

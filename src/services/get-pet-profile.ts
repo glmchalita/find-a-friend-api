@@ -18,9 +18,7 @@ export class GetPetProfileService {
   }: GetPetProfileServiceRequest): Promise<GetPetProfileServiceResponse> {
     const pet = await this.petsRepository.findById(petId)
 
-    if (!pet) {
-      throw new ResourceNotFoundError()
-    }
+    if (!pet) throw new ResourceNotFoundError()
 
     return { pet }
   }

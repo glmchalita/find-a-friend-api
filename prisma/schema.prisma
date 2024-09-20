@@ -14,48 +14,53 @@ datasource db {
 }
 
 enum Species {
-  DOG
-  CAT
+  Dog
+  Cat
+}
+
+enum Size {
+  Small
+  Medium
+  Large
 }
 
 model Ong {
-  id            String   @id @default(uuid())
-  name          String
-  phone         String
-  cnpj          String   @unique
-  email         String   @unique
-  password_hash String
-  created_at    DateTime @default(now())
+  id String @id @default(uuid())
 
-  address    Address @relation(fields: [address_id], references: [id])
-  address_id String
+  name        String
+  author_name String
+  whatsapp    String
+  cnpj        String @unique
+  email       String @unique
+  password    String
+
+  cep    String
+  state  String
+  city   String
+  street String
+
+  latitude  Decimal
+  longitude Decimal
+
+  created_at DateTime @default(now())
 
   pets Pet[]
 
   @@map("ongs")
 }
 
-model Address {
-  id            String @id @default(uuid())
-  city          String
-  state         String
-  zipcode       String
-  street        String
-  street_number String
-  Ong           Ong[]
-}
-
 model Pet {
-  id            String   @id @default(uuid())
-  name          String
-  species       Species
-  breed         String
-  color         String
-  size          String
-  birth_on_date DateTime
+  id String @id @default(uuid())
 
-  ong    Ong    @relation(fields: [ong_id], references: [id])
+  name       String
+  species    Species
+  size       Size
+  breed      String
+  color      String
+  birth_date DateTime
+
   ong_id String
+  ong    Ong    @relation(fields: [ong_id], references: [id])
 
   @@map("pets")
 }
